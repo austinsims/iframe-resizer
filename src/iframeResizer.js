@@ -41,6 +41,7 @@
 			sizeHeight                : true,
 			sizeWidth                 : false,
 			tolerance                 : 0,
+			passJSONMessages          : false,
 			closedCallback            : function(){},
 			initCallback              : function(){},
 			messageCallback           : function(){},
@@ -337,9 +338,14 @@
 			}
 		}
 
-		var
-			msg = event.data,
-			messageData = {};
+		var msg;
+		var messageData = {};
+
+		if (settings.passJSONMessages) {
+			msg = JSON.parse(event.data);
+		} else {
+			msg = event.data;
+		}
 
 		if (isMessageForUs()){
 			log(' Received: '+msg);
@@ -464,7 +470,8 @@
 				':' + settings.bodyBackground +
 				':' + settings.bodyPadding +
 				':' + settings.tolerance +
-				':' + settings.enableInPageLinks;
+				':' + settings.enableInPageLinks +
+				':' + settings.passJSONMessages;
 		}
 
 		function init(msg){

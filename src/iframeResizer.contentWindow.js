@@ -39,7 +39,8 @@
 		tolerance             = 0,
 		triggerLocked         = false,
 		triggerLockedTimer    = null,
-		width                 = 1;
+		width                 = 1,
+		passJSONMessages      = false;
 
 
 	function addEventListener(el,evt,func){
@@ -103,6 +104,7 @@
 		bodyPadding        = data[10];
 		tolerance          = (undefined !== data[11]) ? Number(data[11]) : tolerance;
 		inPageLinks.enable = (undefined !== data[12]) ? strBool(data[12]): false;
+		passJSONMessages   = (undefined !== data[13]) ? strBool(data[13]): false;
 	}
 
 	function chkCSS(attr,value){
@@ -632,7 +634,18 @@
 				message = myID + ':' +  size + ':' + triggerEvent + (undefined !== msg ? ':' + msg : '');
 
 			log('Sending message to host page (' + message + ')');
-			target.postMessage( msgID + message, targetOrigin);
+
+			var messageWithId = msgID + message;
+			var finalMessage;
+			if (passJSONMessages) {
+				// If all messages should be passed as JSON, then JSONify the message before passing it
+				finalMessage = JSON.stringify(messageWithId);
+			} else {
+				// Otherwise just pass it as a string
+				finalMessage = messageWithId;
+			}
+
+			target.postMessage( finalMessage, targetOrigin);
 		}
 
 		setTargetOrigin();
