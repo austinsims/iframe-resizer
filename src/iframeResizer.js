@@ -341,7 +341,7 @@
 		var msg;
 		var messageData = {};
 
-		if (settings.passJSONMessages) {
+		if (settings.passJSONMessages && typeof event.data === 'string') {
 			msg = JSON.parse(event.data);
 		} else {
 			msg = event.data;
