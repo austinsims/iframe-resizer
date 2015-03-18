@@ -40,7 +40,8 @@
 		triggerLocked         = false,
 		triggerLockedTimer    = null,
 		width                 = 1,
-		passJSONMessages      = false;
+		passJSONMessages      = false,
+		neverResizeToZero     = false;
 
 
 	function addEventListener(el,evt,func){
@@ -105,6 +106,7 @@
 		tolerance          = (undefined !== data[11]) ? Number(data[11]) : tolerance;
 		inPageLinks.enable = (undefined !== data[12]) ? strBool(data[12]): false;
 		passJSONMessages   = (undefined !== data[13]) ? strBool(data[13]): false;
+		neverResizeToZero  = (undefined !== data[14]) ? strBool(data[14]): false;
 	}
 
 	function chkCSS(attr,value){

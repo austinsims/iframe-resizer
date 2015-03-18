@@ -42,6 +42,7 @@
 			sizeWidth                 : false,
 			tolerance                 : 0,
 			passJSONMessages          : false,
+			neverResizeToZero         : false,
 			closedCallback            : function(){},
 			initCallback              : function(){},
 			messageCallback           : function(){},
@@ -390,6 +391,9 @@
 
 	function setSize(messageData){
 		function setDimension(dimension){
+
+			if (settings.neverResizeToZero && messageData[dimension] === "0") return;
+
 			messageData.iframe.style[dimension] = messageData[dimension] + 'px';
 			log(
 				' IFrame (' + messageData.iframe.id +
@@ -471,7 +475,8 @@
 				':' + settings.bodyPadding +
 				':' + settings.tolerance +
 				':' + settings.enableInPageLinks +
-				':' + settings.passJSONMessages;
+				':' + settings.passJSONMessages + 
+				':' + settings.neverResizeToZero;
 		}
 
 		function init(msg){
